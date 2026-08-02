@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@import './base.css' layer(base);
+@import './blog.css' layer(components);
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-hand: "Caveat", "Bradley Hand", "Segoe Print", cursive;
+
+  /* Sampled from the CV artwork */
+  --color-ink: #262626;
+  --color-ink-soft: #2e2e2e;
+  --color-ink-deep: #1d1d1d;
+  --color-line: #3e3e3e;
+  --color-paper: #e5e5e5;
+  --color-paper-bright: #fafafa;
+  --color-paper-dim: #9a9a9a;
+  --color-klein: #053090;
+  --color-klein-bright: #1543c4;
+
+  --shadow-search: 0 -1px 27px 0 rgba(0, 0, 0, 0.35), 0 4px 15px 0 rgba(0, 0, 0, 0.45);
+}
+
+@layer components {
+  /* Dashed capsule used for skills, languages and tags in the CV */
+  .pill {
+    @apply inline-flex items-center border border-dashed border-line text-paper;
+    @apply rounded-md text-sm px-3 py-2 leading-none;
+  }
+
+  .pill-solid {
+    @apply inline-flex items-center bg-ink-soft border border-line text-paper;
+    @apply rounded-md text-sm px-3 py-2 leading-none;
+  }
+
+  /* Section heading + handwritten kicker pair */
+  .section-title {
+    @apply text-2xl md:text-4xl font-bold uppercase tracking-tight text-paper-bright;
+  }
+
+  .section-kicker {
+    @apply font-hand text-xl md:text-2xl text-paper-dim mt-1;
+  }
+
+  .link-underline {
+    @apply underline decoration-line underline-offset-4 hover:decoration-paper transition-colors;
+  }
+}
+
+@layer utilities {
+  .shadow-search {
+    box-shadow: var(--shadow-search);
+  }
+
+  /* The CV rules everything off a dashed baseline */
+  .rule-dashed {
+    @apply border-t border-dashed border-line;
+  }
+}
