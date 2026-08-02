@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="Melieqa Rezaei is an architect and architectural storyteller. I help architecture become understandable.">
+        <meta name="theme-color" content="#262626">
+
+        <meta property="og:title" content="Melieqa Rezaei"/>
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://melieqa.com/"/>
+        <meta property="og:description" content="Melieqa Rezaei is an architect and architectural storyteller. I help architecture become understandable." />
+
+        <title>Melieqa Rezaei</title>
+
+        <link rel="home" href="https://melieqa.com">
+        <link rel="icon" href="/favicon.ico">
+        <link href="/blog/feed.atom" type="application/atom+xml" rel="alternate" title="Melieqa Rezaei Atom Feed">
+
+                    <!-- Insert analytics code here -->
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+
+                <link rel="stylesheet" href="/assets/build/main-Dg1b3Meb.css">
+        <script defer type="module" src="/assets/build/main-BINBoxd5.js"></script>
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen bg-ink text-paper leading-relaxed font-sans antialiased">
+        
+        <header
+            class="sticky top-0 z-20 bg-ink/95 backdrop-blur-sm border-b border-line"
+            role="banner"
+            x-data="{ open: false }"
+            @keydown.escape.window="open = false"
+        >
+            <div class="container flex items-center max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 h-16 md:h-20 gap-4">
+                <a href="/" title="Melieqa Rezaei home" class="inline-flex items-baseline gap-2 shrink-0 group">
+                    <span class="text-base md:text-xl font-semibold tracking-tight text-paper-bright group-hover:text-white transition-colors">
+                        Melieqa Rezaei
+                    </span>
+                    <span class="hidden lg:inline font-hand text-lg text-paper-dim">architect</span>
+                </a>
+
+                <div class="flex flex-1 justify-end items-center gap-2 md:gap-4">
+                    <div x-data="{
+        init(){
+            fetch('/index.json')
+                .then(response => response.json())
+                .then(data => {
+                    this.fuse = new window.Fuse(data, {
+                        minMatchCharLength: 3,
+                        threshold: 0.35,
+                        keys: ['title', 'snippet', 'categories'],
+                    });
+                });
+        },
+        get results() {
+            return this.query && this.fuse ? this.fuse.search(this.query).slice(0, 6) : [];
+        },
+        get isQuerying() {
+            return Boolean(this.query);
+        },
+        fuse: null,
+        searching: false,
+        query: '',
+        showInput() {
+            this.searching = true;
+            this.$nextTick(() => {
+                this.$refs.search.focus();
+            })
+        },
+        reset() {
+            this.query = '';
+            this.searching = false;
+        },
+    }"
+    x-cloak
+    class="flex flex-1 justify-end items-center text-right"
+    @keydown.escape.window="reset()"
+>
+    <div
+        class="absolute md:relative w-full md:w-auto md:flex-1 justify-end left-0 top-full md:top-auto z-10 bg-ink md:bg-transparent px-5 py-3 md:p-0 border-b md:border-b-0 border-line"
+        :class="{ 'hidden md:flex': ! searching, 'flex': searching }"
+    >
+        <label for="search" class="sr-only">Search</label>
+
+        <input
+            id="search"
+            x-model="query"
+            x-ref="search"
+            class="relative block h-10 w-full md:w-56 lg:w-64 lg:focus:w-80 bg-ink-soft border border-line focus:border-klein-bright outline-none text-paper placeholder:text-paper-dim text-sm px-4 transition-all duration-200 ease-out rounded-md"
+            :class="{ 'rounded-b-none': query }"
+            autocomplete="off"
+            name="search"
+            placeholder="Search"
+            type="text"
+            @keyup.esc="reset"
+            @blur="reset"
+        >
+
+        <button
+            x-show="query"
+            x-cloak
+            type="button"
+            class="absolute top-3 right-7 md:top-0 md:right-2 md:h-10 leading-none text-2xl text-paper-dim hover:text-paper-bright focus:outline-none"
+            @click="reset"
+            aria-label="Clear search"
+        >&times;</button>
+
+        <div
+            x-show="isQuerying"
+            x-cloak
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            class="absolute left-5 right-5 md:left-auto md:right-0 top-14 md:top-12 text-left w-auto md:w-80 lg:w-96"
+        >
+            <div class="flex flex-col bg-ink-soft border border-line rounded-md shadow-search overflow-hidden">
+                <template x-for="(result, index) in results" :key="result.item.link">
+                    <a
+                        class="bg-ink-soft hover:bg-ink border-b border-line last:border-b-0 text-sm p-4"
+                        :href="result.item.link"
+                        :title="result.item.title"
+                        @mousedown.prevent
+                    >
+                        <span class="block font-medium text-paper-bright" x-html="result.item.title"></span>
+
+                        <span class="block font-normal text-paper-dim text-xs mt-1 line-clamp-2" x-html="result.item.snippet"></span>
+                    </a>
+                </template>
+
+                <div x-show="! results.length" class="text-sm text-paper-dim p-4">
+                    <p class="my-0">No results for <strong class="text-paper" x-html="query"></strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button
+        title="Start searching"
+        type="button"
+        class="flex md:hidden justify-center items-center h-10 w-10 border border-line rounded-md text-paper hover:border-paper-dim focus:outline-none"
+        @click.prevent="showInput"
+        aria-label="Search"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path stroke-linecap="round" d="M20 20l-3.5-3.5" />
+        </svg>
+    </button>
+</div>
+
+                    <nav class="hidden md:flex items-center justify-end gap-5 lg:gap-7 text-sm" aria-label="Primary">
+            <a
+            title="Melieqa Rezaei Work"
+            href="/work"
+            class="pb-1 border-b-2 transition-colors text-paper-dim border-transparent hover:text-paper-bright"
+        >Work</a>
+            <a
+            title="Melieqa Rezaei About"
+            href="/about"
+            class="pb-1 border-b-2 transition-colors text-paper-dim border-transparent hover:text-paper-bright"
+        >About</a>
+            <a
+            title="Melieqa Rezaei Contact"
+            href="/contact"
+            class="pb-1 border-b-2 transition-colors text-paper-dim border-transparent hover:text-paper-bright"
+        >Contact</a>
+    </nav>
+
+                    <button
+    type="button"
+    class="md:hidden flex justify-center items-center h-10 w-10 border border-line rounded-md text-paper hover:border-paper-dim focus:outline-none focus-visible:ring-2 focus-visible:ring-klein-bright"
+    @click="open = ! open"
+    :aria-expanded="open ? 'true' : 'false'"
+    aria-controls="mobile-menu"
+    aria-label="Toggle navigation"
+>
+    <svg x-show="! open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="1.8" aria-hidden="true">
+        <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+
+    <svg x-show="open" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="1.8" aria-hidden="true">
+        <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+    </svg>
+</button>
+                </div>
+            </div>
+
+            <nav
+    id="mobile-menu"
+    x-show="open"
+    x-cloak
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 -translate-y-2"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    class="md:hidden border-t border-line bg-ink"
+    aria-label="Mobile"
+>
+    <ul class="list-none my-0 container max-w-6xl mx-auto px-5 sm:px-6 py-2">
+                    <li class="border-b border-dashed border-line last:border-b-0">
+                <a
+                    title="Melieqa Rezaei Work"
+                    href="/work"
+                    @click="open = false"
+                    class="block py-4 text-base text-paper-dim"
+                >Work</a>
+            </li>
+                    <li class="border-b border-dashed border-line last:border-b-0">
+                <a
+                    title="Melieqa Rezaei About"
+                    href="/about"
+                    @click="open = false"
+                    class="block py-4 text-base text-paper-dim"
+                >About</a>
+            </li>
+                    <li class="border-b border-dashed border-line last:border-b-0">
+                <a
+                    title="Melieqa Rezaei Contact"
+                    href="/contact"
+                    @click="open = false"
+                    class="block py-4 text-base text-paper-dim"
+                >Contact</a>
+            </li>
+            </ul>
+</nav>
+        </header>
+
+        <main role="main" class="flex-auto w-full">
+                
+    <section class="relative overflow-hidden">
+        <div class="relative container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pt-16 md:pt-24 pb-16">
+            <div class="flex flex-col md:flex-row md:items-end gap-10 md:gap-14">
+                <div class="relative w-48 sm:w-56 md:w-64 shrink-0">
+                    
+                    <div
+                        class="absolute -top-10 md:-top-16 left-8 sm:left-10 w-14 sm:w-16 md:w-20 h-[130%] bg-klein -z-10"
+                        aria-hidden="true"
+                    ></div>
+
+                    <img
+        src="/assets/build/images/melieqa.webp"
+        alt="Melieqa Rezaei"
+        loading="lazy"
+        class="w-full h-full aspect-[4/5] object-cover bg-ink-soft"
+    >
+                </div>
+
+                <div class="flex-1">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-paper-bright my-0">
+                        Melieqa Rezaei
+                    </h1>
+
+                    <p class="text-lg sm:text-xl lg:text-2xl font-medium text-paper mt-3 mb-1">Architectural Storyteller &amp; Designer</p>
+
+                    <p class="text-sm sm:text-base text-paper-dim my-0">I help architecture become understandable.</p>
+
+                    <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm mt-8 max-w-md">
+                        <dt class="text-paper-dim">Portfolio:</dt>
+                        <dd class="my-0"><a class="link-underline font-semibold" href="https://melieqa.com">Melieqa.com</a></dd>
+
+                        <dt class="text-paper-dim">E-mail:</dt>
+                        <dd class="my-0"><a class="link-underline tracking-wide" href="mailto:melieqapr@gmail.com">melieqapr@gmail.com</a></dd>
+
+                        <dt class="text-paper-dim">Tel.:</dt>
+                        <dd class="my-0"><a class="link-underline" href="tel:+989903331703">+98 990 333 1703</a></dd>
+                    </dl>
+
+                    <p class="font-hand text-xl md:text-2xl text-paper-bright mt-6 mb-0">
+                        Click here and let's collaborate!
+                    </p>
+
+                    <p class="font-hand text-lg text-paper-dim mt-1 mb-0">
+                        You can also find me on social media with
+                        <span class="text-paper-bright">@melieqa</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
+        <div class="mb-8 md:mb-12">
+    <h2 class="section-title my-0">Who I am</h2>
+
+            <p class="section-kicker my-0 md:ml-16">The short version</p>
+    </div>
+
+        <div class="max-w-3xl flex flex-col gap-5 text-base md:text-lg">
+            <p class="my-0">
+                I am an architect (BArch, University of Tabriz) who cares as much about the story behind a design
+                as the design itself. A space isn't just walls and function, it is the thoughts and feelings that
+                shaped it, and my work is making that visible.
+            </p>
+
+            <p class="my-0">
+                Projects usually reach me when the idea is already good but illegible: it lives in the architect's
+                head and dies somewhere between the plan and the board. My job is to find the argument inside the
+                project and give it a structure a jury or a client can follow in seconds, design that works, but
+                also speaks.
+            </p>
+
+            <p class="font-hand text-xl md:text-2xl text-paper-bright my-0 pt-2">
+                What I enjoy most is making the design process feel alive, not just the final result.
+            </p>
+        </div>
+    </section>
+
+    
+    <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
+        <div class="flex flex-wrap items-end justify-between gap-4 mb-8 md:mb-12">
+            <div>
+                <h2 class="section-title my-0">Selected work</h2>
+                <p class="section-kicker my-0 md:ml-16">A few things worth showing</p>
+            </div>
+
+            <a href="/work" title="All work" class="link-underline text-sm shrink-0">All work &RightArrow;</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                            <a
+    href="https://melieqa.com/work/cardiac-hospital"
+    title="Cardiac Hospital"
+    class="group flex flex-col border border-line hover:border-paper-dim rounded-md overflow-hidden transition-colors"
+>
+    <div
+        class="w-full aspect-[4/3] bg-ink-soft border border-dashed border-line flex flex-col items-center justify-center text-center gap-2 px-4"
+        role="img"
+        aria-label="Placeholder for Cardiac Hospital"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 stroke-current text-line" fill="none" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="1.5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16l5-5 4 4 3-3 6 6" />
+            <circle cx="8.5" cy="9" r="1.25" />
+        </svg>
+
+        <span class="font-hand text-lg md:text-xl text-paper-dim leading-tight">Cardiac Hospital</span>
+
+        <span class="text-[10px] uppercase tracking-[0.2em] text-line">Add image</span>
+    </div>
+
+    <div class="flex flex-col flex-1 p-5">
+        <p class="text-xs uppercase tracking-[0.18em] text-paper-dim my-0">Undergraduate thesis · BArch</p>
+
+        <h3 class="text-lg md:text-xl font-semibold text-paper-bright mt-2 mb-1 leading-snug">Cardiac Hospital</h3>
+
+        <p class="text-sm text-paper-dim my-0">University of Tabriz · 2022 · Final grade 17.13 out of 20</p>
+
+                    <p class="text-sm text-paper mt-3 mb-0">A hospital planned around the patient&#039;s path to critical care.</p>
+        
+        <span class="text-sm text-paper-dim group-hover:text-paper-bright mt-4 transition-colors">View &RightArrow;</span>
+    </div>
+</a>
+                            <a
+    href="https://melieqa.com/work/analytical-graphics"
+    title="Analytical Graphics for 12 Projects"
+    class="group flex flex-col border border-line hover:border-paper-dim rounded-md overflow-hidden transition-colors"
+>
+    <div
+        class="w-full aspect-[4/3] bg-ink-soft border border-dashed border-line flex flex-col items-center justify-center text-center gap-2 px-4"
+        role="img"
+        aria-label="Placeholder for Analytical Graphics for 12 Projects"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 stroke-current text-line" fill="none" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="1.5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16l5-5 4 4 3-3 6 6" />
+            <circle cx="8.5" cy="9" r="1.25" />
+        </svg>
+
+        <span class="font-hand text-lg md:text-xl text-paper-dim leading-tight">Analytical Graphics for 12 Projects</span>
+
+        <span class="text-[10px] uppercase tracking-[0.2em] text-line">Add image</span>
+    </div>
+
+    <div class="flex flex-col flex-1 p-5">
+        <p class="text-xs uppercase tracking-[0.18em] text-paper-dim my-0">Architectural graphic design</p>
+
+        <h3 class="text-lg md:text-xl font-semibold text-paper-bright mt-2 mb-1 leading-snug">Analytical Graphics for 12 Projects</h3>
+
+        <p class="text-sm text-paper-dim my-0">Atelier Mehrkish · Remote, project-based · 2024 – 2025</p>
+
+                    <p class="text-sm text-paper mt-3 mb-0">Diagrams that made design concepts legible for juries and clients.</p>
+        
+        <span class="text-sm text-paper-dim group-hover:text-paper-bright mt-4 transition-colors">View &RightArrow;</span>
+    </div>
+</a>
+                            <a
+    href="https://melieqa.com/work/palette-visuals-modelling"
+    title="Rhino Modelling for Palette Visuals"
+    class="group flex flex-col border border-line hover:border-paper-dim rounded-md overflow-hidden transition-colors"
+>
+    <div
+        class="w-full aspect-[4/3] bg-ink-soft border border-dashed border-line flex flex-col items-center justify-center text-center gap-2 px-4"
+        role="img"
+        aria-label="Placeholder for Rhino Modelling for Palette Visuals"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 stroke-current text-line" fill="none" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="1.5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16l5-5 4 4 3-3 6 6" />
+            <circle cx="8.5" cy="9" r="1.25" />
+        </svg>
+
+        <span class="font-hand text-lg md:text-xl text-paper-dim leading-tight">Rhino Modelling for Palette Visuals</span>
+
+        <span class="text-[10px] uppercase tracking-[0.2em] text-line">Add image</span>
+    </div>
+
+    <div class="flex flex-col flex-1 p-5">
+        <p class="text-xs uppercase tracking-[0.18em] text-paper-dim my-0">3D modelling · Freelance</p>
+
+        <h3 class="text-lg md:text-xl font-semibold text-paper-bright mt-2 mb-1 leading-snug">Rhino Modelling for Palette Visuals</h3>
+
+        <p class="text-sm text-paper-dim my-0">Palette Visuals · 4 small-scale projects · 2025 – Present</p>
+
+                    <p class="text-sm text-paper mt-3 mb-0">Modelling to studio briefs and deadlines, from concept to delivered set.</p>
+        
+        <span class="text-sm text-paper-dim group-hover:text-paper-bright mt-4 transition-colors">View &RightArrow;</span>
+    </div>
+</a>
+                    </div>
+    </section>
+
+    
+    <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
+        <div class="mb-8 md:mb-12">
+    <h2 class="section-title my-0">What I&#039;ve been working on</h2>
+
+            <p class="section-kicker my-0 md:ml-16">2020 — 2026</p>
+    </div>
+
+        <ol class="list-none my-0 pl-0 relative border-l border-dashed border-line ml-2 md:ml-3">
+            <li class="relative pl-6 md:pl-10 pb-10 last:pb-0">
+            <span
+                class="absolute -left-[5px] top-2 h-2 w-2 rotate-45 bg-klein-bright"
+                aria-hidden="true"
+            ></span>
+
+            <p class="text-xs md:text-sm uppercase tracking-[0.18em] text-paper-dim my-0">Oct. 2025 — Present</p>
+
+            <h3 class="text-lg md:text-xl font-semibold text-paper-bright mt-2 mb-1 leading-snug">Teaching Assistant</h3>
+
+            <p class="text-sm text-paper my-0">Palette Academy</p>
+
+                    </li>
+            <li class="relative pl-6 md:pl-10 pb-10 last:pb-0">
+            <span
+                class="absolute -left-[5px] top-2 h-2 w-2 rotate-45 bg-klein-bright"
+                aria-hidden="true"
+            ></span>
+
+            <p class="text-xs md:text-sm uppercase tracking-[0.18em] text-paper-dim my-0">2025 — Present</p>
+
+            <h3 class="text-lg md:text-xl font-semibold text-paper-bright mt-2 mb-1 leading-snug">Freelance</h3>
+
+            <p class="text-sm text-paper my-0">Diagrams, visualisation and 3D modelling</p>
+
+                            <p class="text-sm text-paper-dim mt-2 mb-0 max-w-2xl">For architecture studios and independent architects, from first concept diagram to final delivered set. Recent work includes Rhino modelling on 4 small-scale projects for Palette Visuals.</p>
+                    </li>
+            <li class="relative pl-6 md:pl-10 pb-10 last:pb-0">
+            <span
+                class="absolute -left-[5px] top-2 h-2 w-2 rotate-45 bg-klein-bright"
+                aria-hidden="true"
+            ></span>
+
+            <p class="text-xs md:text-sm uppercase tracking-[0.18em] text-paper-dim my-0">2024 — 2025</p>
+
+            <h3 class="text-lg md:text-xl font-semibold text-paper-bright mt-2 mb-1 leading-snug">Architectural Graphic Designer</h3>
+
+            <p class="text-sm text-paper my-0">Atelier Mehrkish · Remote, project-based</p>
+
+                            <p class="text-sm text-paper-dim mt-2 mb-0 max-w-2xl">Developed analytical graphics for 12 architectural projects, helping design concepts become clearer for presentations and client communication.</p>
+                    </li>
+            <li class="relative pl-6 md:pl-10 pb-10 last:pb-0">
+            <span
+                class="absolute -left-[5px] top-2 h-2 w-2 rotate-45 bg-klein-bright"
+                aria-hidden="true"
+            ></span>
+
+            <p class="text-xs md:text-sm uppercase tracking-[0.18em] text-paper-dim my-0">2022 — 2024</p>
+
+            <h3 class="text-lg md:text-xl font-semibold text-paper-bright mt-2 mb-1 leading-snug">Independent study &amp; professional development</h3>
+
+            <p class="text-sm text-paper my-0">Intensive German study, design research, environmental volunteering, travel across Iran</p>
+
+                            <p class="text-sm text-paper-dim mt-2 mb-0 max-w-2xl">The visual and research habits behind my current work were built in these two years.</p>
+                    </li>
+            <li class="relative pl-6 md:pl-10 pb-10 last:pb-0">
+            <span
+                class="absolute -left-[5px] top-2 h-2 w-2 rotate-45 bg-klein-bright"
+                aria-hidden="true"
+            ></span>
+
+            <p class="text-xs md:text-sm uppercase tracking-[0.18em] text-paper-dim my-0">2022</p>
+
+            <h3 class="text-lg md:text-xl font-semibold text-paper-bright mt-2 mb-1 leading-snug">Architectural Intern</h3>
+
+            <p class="text-sm text-paper my-0">Souzandareh Co.</p>
+
+                    </li>
+            <li class="relative pl-6 md:pl-10 pb-10 last:pb-0">
+            <span
+                class="absolute -left-[5px] top-2 h-2 w-2 rotate-45 bg-klein-bright"
+                aria-hidden="true"
+            ></span>
+
+            <p class="text-xs md:text-sm uppercase tracking-[0.18em] text-paper-dim my-0">2018 — 2022</p>
+
+            <h3 class="text-lg md:text-xl font-semibold text-paper-bright mt-2 mb-1 leading-snug">BArch, Architecture</h3>
+
+            <p class="text-sm text-paper my-0">University of Tabriz · Final grade 17.13 out of 20</p>
+
+                            <p class="text-sm text-paper-dim mt-2 mb-0 max-w-2xl">Graduated with a cardiac hospital designed around the patient&#039;s path to critical care.</p>
+                    </li>
+    </ol>
+    </section>
+
+    
+    
+    
+    <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+                <h2 class="section-title my-0">Let's collaborate</h2>
+                <p class="section-kicker my-0 md:ml-16">Diagrams, visuals, 3D, or a whole narrative</p>
+            </div>
+
+            <a
+                href="/contact"
+                title="Contact Melieqa Rezaei"
+                class="inline-flex items-center justify-center bg-klein hover:bg-klein-bright text-paper-bright text-sm font-medium tracking-wide uppercase rounded-md px-8 py-4 transition-colors shrink-0"
+            >Get in touch</a>
+        </div>
+    </section>
+        </main>
+
+        <footer class="border-t border-line mt-20" role="contentinfo">
+            <div class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-12">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+                    <div>
+                        <p class="font-hand text-2xl text-paper-bright my-0">Let's collaborate.</p>
+
+                        <ul class="list-none pl-0 my-4 space-y-1 text-sm">
+                            <li>
+                                <span class="text-paper-dim">E-mail:</span>
+                                <a class="link-underline" href="mailto:melieqapr@gmail.com">melieqapr@gmail.com</a>
+                            </li>
+                            <li>
+                                <span class="text-paper-dim">Tel.:</span>
+                                <a class="link-underline" href="tel:+989903331703">+98 990 333 1703</a>
+                            </li>
+                            <li>
+                                <span class="text-paper-dim">Social:</span>
+                                <span class="text-paper">@melieqa</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="text-sm text-paper-dim md:text-right">
+                        <p class="my-0">&copy; 2026 Melieqa Rezaei.</p>
+                        <p class="my-0">Architectural Storyteller &amp; Designer</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+            </body>
+</html>

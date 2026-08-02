@@ -1,0 +1,17 @@
+{
+  "source/_assets/css/main.css": {
+    "file": "main-Dg1b3Meb.css",
+    "name": "main",
+    "names": [
+      "main.css"
+    ],
+    "src": "source/_assets/css/main.css",
+    "isEntry": true
+  },
+  "source/_assets/js/main.js": {
+    "file": "main-BINBoxd5.js",
+    "name": "main",
+    "src": "source/_assets/js/main.js",
+    "isEntry": true
+  }
+}
