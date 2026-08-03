@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Melieqa Rezaei</title>
+    <link href="https://melieqa.com/blog" />
+    <link type="application/atom+xml" rel="self" href="https://melieqa.com/blog/feed.atom" />
+    <updated>2026-08-03T08:48:45+00:00</updated>
+    <id>https://melieqa.com/blog/feed.atom</id>
+    <author>
+        <name>Melieqa Rezaei</name>
+    </author>
+        </feed>
