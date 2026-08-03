@@ -1,8 +1,15 @@
-# melieqa.com
+# Development
 
 Portfolio site for Melieqa Rezaei — architect, architectural storyteller and designer.
 Built with [Jigsaw](https://jigsaw.tighten.co) (static site generator, Blade templates), Tailwind CSS 4,
 Alpine.js and Vite.
+
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and subtree-splits
+`build_production/` onto the `gh-pages` branch, which GitHub Pages serves at melieqa.com. The build
+output is not tracked on `main`; it exists only on `gh-pages`.
+
+The workflow needs PHP 8.4 or newer — `composer.lock` resolves Symfony 8, which requires
+`php >=8.4.1`.
 
 ## Running it
 
@@ -25,7 +32,7 @@ npm run prod
 Every image on the site is a placeholder until a real file is dropped in. Placeholders render as a dashed
 box labelled with what belongs there, so nothing looks broken while the portfolio is being filled in.
 
-1. Put files in `source/assets/img/` (they are copied to `/assets/img/...` in the built site).
+1. Put files in `source/assets/img/` (copied verbatim to `/assets/img/...` in the built site).
 2. Point the relevant field at them:
 
 | Where | Field |
@@ -33,7 +40,12 @@ box labelled with what belongs there, so nothing looks broken while the portfoli
 | Project card + project page hero | `image:` in the project's front matter |
 | Project page gallery | `gallery: [...]` in the project's front matter |
 | Blog post cover | `cover_image:` in the post's front matter |
-| Home and About portrait | the `image` key in the `_components.placeholder-image` include |
+| Home and About portrait | `portrait` in `config.php` |
+
+The portrait and favicon instead live in `source/_assets/images/` and are copied by
+vite-plugin-static-copy to `/assets/build/images/...`. Files copied that way are not Vite entries,
+so reference them by path — `vite()` fails the build on them with "Main entry point not found in
+Vite manifest".
 
 Example, in `source/_projects/kanoon-center.md`:
 
@@ -87,10 +99,13 @@ Two things to know when hiding posts:
 
 ## Content that still needs a pass
 
-- Portrait images (home, about) and all project imagery
+- All project imagery
+- Every project currently ships `is_visible: false`, so the work section is empty
 - The blog holds one placeholder post at `source/_posts/making-a-diagram-legible.md`
-- The contact form needs a third-party endpoint (FieldGoal, Formspree, Netlify Forms) in its `action`
-  before it can deliver — static sites cannot process form posts
+- Project write-ups in `source/_projects/` were drafted from the CV; the prose beyond the CV's own
+  sentences, plus the `role` and `tools` fields, still needs checking
+- Search is commented out in `source/_layouts/main.blade.php`, but Fuse.js is still bundled and
+  `index.json` is still generated on every build
 
 ## Structure
 
@@ -101,3 +116,4 @@ Two things to know when hiding posts:
 - `source/_projects/`, `source/_posts/`, `source/_categories/` — content collections
 - `listeners/` — build hooks that generate `sitemap.xml` and the `index.json` search index
 - `source/_assets/css/main.css` — theme tokens (colours, fonts) sampled from the CV
+- `.github/workflows/deploy.yml` — build and publish to `gh-pages`
