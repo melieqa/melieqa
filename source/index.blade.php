@@ -10,13 +10,11 @@ description: Melieqa Rezaei is an architect and architectural storyteller. I hel
             <div class="flex flex-col md:flex-row md:items-end gap-10 md:gap-14">
                 <div class="relative w-48 sm:w-56 md:w-64 shrink-0">
                     {{-- The vertical Klein-blue band running behind the portrait, as on the CV cover --}}
-                    <div
-                        class="absolute -top-10 md:-top-16 left-8 sm:left-10 w-14 sm:w-16 md:w-20 h-[130%] bg-klein -z-10"
-                        aria-hidden="true"
-                    ></div>
+                    <div class="absolute -top-14 md:-top-16 left-10 md:left-12 sm:left-11 w-28 sm:w-28 md:w-30 h-[130%] bg-klein -z-10"
+                        aria-hidden="true"></div>
 
                     @include('_components.placeholder-image', [
-                        'image' => null,
+                        'image' => $page->portrait,
                         'label' => 'Portrait',
                         'alt' => 'Melieqa Rezaei',
                         'ratio' => 'aspect-[4/5]',
@@ -33,24 +31,15 @@ description: Melieqa Rezaei is an architect and architectural storyteller. I hel
                     <p class="text-sm sm:text-base text-paper-dim my-0">{{ $page->statement }}</p>
 
                     <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm mt-8 max-w-md">
-                        <dt class="text-paper-dim">Portfolio:</dt>
-                        <dd class="my-0"><a class="link-underline font-semibold" href="{{ $page->baseUrl }}">Melieqa.com</a></dd>
 
                         <dt class="text-paper-dim">E-mail:</dt>
-                        <dd class="my-0"><a class="link-underline tracking-wide" href="mailto:{{ $page->email }}">{{ $page->email }}</a></dd>
+                        <dd class="my-0"><a class="link-underline tracking-wide"
+                                href="mailto:{{ $page->email }}">{{ $page->email }}</a></dd>
 
                         <dt class="text-paper-dim">Tel.:</dt>
-                        <dd class="my-0"><a class="link-underline" href="tel:{{ $page->phoneLink }}">{{ $page->phone }}</a></dd>
+                        <dd class="my-0"><a class="link-underline"
+                                href="tel:{{ $page->phoneLink }}">{{ $page->phone }}</a></dd>
                     </dl>
-
-                    <p class="font-hand text-xl md:text-2xl text-paper-bright mt-6 mb-0">
-                        Click here and let's collaborate!
-                    </p>
-
-                    <p class="font-hand text-lg text-paper-dim mt-1 mb-0">
-                        You can also find me on social media with
-                        <span class="text-paper-bright">{{ $page->social }}</span>
-                    </p>
                 </div>
             </div>
         </div>
@@ -58,7 +47,7 @@ description: Melieqa Rezaei is an architect and architectural storyteller. I hel
 
     {{-- Who I am --}}
     <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
-        @include('_components.section-heading', ['heading' => 'Who I am', 'kicker' => 'The short version'])
+        @include('_components.section-heading', ['heading' => 'Who I am'])
 
         <div class="max-w-3xl flex flex-col gap-5 text-base md:text-lg">
             <p class="my-0">
@@ -81,26 +70,30 @@ description: Melieqa Rezaei is an architect and architectural storyteller. I hel
     </section>
 
     {{-- Selected work --}}
-    <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
-        <div class="flex flex-wrap items-end justify-between gap-4 mb-8 md:mb-12">
-            <div>
-                <h2 class="section-title my-0">Selected work</h2>
-                <p class="section-kicker my-0 md:ml-16">A few things worth showing</p>
+    @if ($projects->isNotEmpty())
+        <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
+            <div class="flex flex-wrap items-end justify-between gap-4 mb-8 md:mb-12">
+                <div>
+                    <h2 class="section-title my-0">Selected work</h2>
+                    <p class="section-kicker my-0 md:ml-16">A few things worth showing</p>
+                </div>
+
+                <a href="/work" title="All work" class="link-underline text-sm shrink-0">All work &RightArrow;</a>
             </div>
 
-            <a href="/work" title="All work" class="link-underline text-sm shrink-0">All work &RightArrow;</a>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            @foreach ($projects->take(3) as $project)
-                @include('_components.project-card', ['project' => $project])
-            @endforeach
-        </div>
-    </section>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                @foreach ($projects->take(3) as $project)
+                    @include('_components.project-card', ['project' => $project])
+                @endforeach
+            </div>
+        </section>
+    @endif
 
     {{-- Timeline --}}
     <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
-        @include('_components.section-heading', ['heading' => "What I've been working on", 'kicker' => '2020 — 2026'])
+        @include('_components.section-heading', [
+            'heading' => "What I've been working on",
+        ])
 
         @include('_components.timeline')
     </section>
@@ -130,14 +123,11 @@ description: Melieqa Rezaei is an architect and architectural storyteller. I hel
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
                 <h2 class="section-title my-0">Let's collaborate</h2>
-                <p class="section-kicker my-0 md:ml-16">Diagrams, visuals, 3D, or a whole narrative</p>
             </div>
 
-            <a
-                href="/contact"
-                title="Contact {{ $page->siteName }}"
-                class="inline-flex items-center justify-center bg-klein hover:bg-klein-bright text-paper-bright text-sm font-medium tracking-wide uppercase rounded-md px-8 py-4 transition-colors shrink-0"
-            >Get in touch</a>
+            <a href="/contact" title="Contact {{ $page->siteName }}"
+                class="inline-flex items-center justify-center bg-klein hover:bg-klein-bright text-paper-bright text-sm font-medium tracking-wide uppercase rounded-md px-8 py-4 transition-colors shrink-0">Get
+                in touch</a>
         </div>
     </section>
 @stop
