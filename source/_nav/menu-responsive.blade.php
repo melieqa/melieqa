@@ -9,7 +9,7 @@
     aria-label="Mobile"
 >
     <ul class="list-none my-0 container max-w-6xl mx-auto px-5 sm:px-6 py-2">
-        @foreach (['Work' => '/work', 'About' => '/about', 'Blog' => '/blog', 'Contact' => '/contact'] as $label => $path)
+        @foreach ($navLinks as $label => $path)
             <li class="border-b border-dashed border-line last:border-b-0">
                 <a
                     title="{{ $page->siteName }} {{ $label }}"

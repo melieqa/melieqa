@@ -17,6 +17,11 @@ return [
     'tagline' => 'Architectural Storyteller & Designer',
     'statement' => 'I help architecture become understandable.',
 
+    // Copied out of source/_assets/images by vite-plugin-static-copy, see vite.config.js.
+    // Static copies are not Vite entries, so they are referenced by path, not vite().
+    'portrait' => '/assets/build/images/melieqa.webp',
+    'favicon' => '/assets/build/images/favicon.ico',
+
     // collections
     'collections' => [
         'projects' => [

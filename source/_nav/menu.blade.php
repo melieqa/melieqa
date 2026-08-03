@@ -1,5 +1,5 @@
 <nav class="hidden md:flex items-center justify-end gap-5 lg:gap-7 text-sm" aria-label="Primary">
-    @foreach (['Work' => '/work', 'About' => '/about', 'Blog' => '/blog', 'Contact' => '/contact'] as $label => $path)
+    @foreach ($navLinks as $label => $path)
         <a
             title="{{ $page->siteName }} {{ $label }}"
             href="{{ $path }}"
