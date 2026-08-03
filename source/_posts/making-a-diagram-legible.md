@@ -3,6 +3,7 @@ extends: _layouts.post
 section: content
 title: Making a diagram legible
 date: 2026-01-15
+is_visible: false
 description: A placeholder post — replace or delete it once your own writing is ready.
 categories: [process]
 featured: true

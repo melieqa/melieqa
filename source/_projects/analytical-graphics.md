@@ -2,6 +2,7 @@
 extends: _layouts.project
 section: content
 order: 3
+is_visible: false
 title: Analytical Graphics for 12 Projects
 kind: Architectural graphic design
 meta: Atelier Mehrkish · Remote, project-based · 2024 – 2025

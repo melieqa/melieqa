@@ -2,6 +2,7 @@
 extends: _layouts.project
 section: content
 order: 5
+is_visible: false
 title: Teaching Diagrams & Rhino
 kind: Teaching assistant
 meta: Palette Academy · Oct. 2025 – Present

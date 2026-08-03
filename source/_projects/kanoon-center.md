@@ -2,6 +2,7 @@
 extends: _layouts.project
 section: content
 order: 1
+is_visible: false
 title: Kanoon Center for Children's Intellectual Development
 kind: Research-based design · Self-directed
 meta: Qaleh Now, Zahak County, Sistan & Baluchestan · 2026 – Present

@@ -2,6 +2,7 @@
 extends: _layouts.project
 section: content
 order: 2
+is_visible: false
 title: Cardiac Hospital
 kind: Undergraduate thesis · BArch
 meta: University of Tabriz · 2022 · Final grade 17.13 out of 20

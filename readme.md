@@ -53,6 +53,7 @@ Create a Markdown file in `source/_projects/`. Front matter drives the card and 
 extends: _layouts.project
 section: content
 order: 1              # controls ordering across the work page
+is_visible: true      # false pulls the project from the site entirely
 title: Project name
 kind: Research-based design · Self-directed
 meta: Location · Year
@@ -66,6 +67,23 @@ description: Used for the meta description and social preview.
 ```
 
 Text above `<!-- more -->` is used as the excerpt.
+
+## Hiding a project or a post
+
+Set `is_visible: false` in the front matter. Filters on the `projects` and `posts` collections in
+`config.php` drop the item before the build runs, so it disappears from its listing, the home page,
+its own URL, the search index, `sitemap.xml` and — for posts — the Atom feed, in one step. Omitting
+the key leaves an item visible.
+
+Nothing should hard-code a project or post URL — link through the collection so the reference
+disappears with the item, as `source/about.blade.php` does for the thesis.
+
+Two things to know when hiding posts:
+
+- Hiding **every** post means Jigsaw's pagination generates no `/blog` page at all. The nav drops
+  its Blog link to match (see the `$navLinks` block in `source/_layouts/main.blade.php`).
+- A category whose posts are all hidden still gets a page, listing nothing. Delete the file in
+  `source/_categories/` if you want it gone.
 
 ## Content that still needs a pass
 

@@ -24,7 +24,7 @@ description: Melieqa Rezaei — architect (BArch, University of Tabriz), archite
     $courses = [
         'Diagram & Design Communication' => [
             ['title' => 'Coronagraph', 'note' => 'Corona Renderer for Architectural Diagram', 'org' => 'Palette Academy', 'when' => 'Fall 2025 · In Progress', 'extra' => null, 'link' => null],
-            ['title' => 'Architectural Diagram Course', 'note' => null, 'org' => 'Palette Academy', 'when' => 'Spring 2025', 'extra' => 'Ranked 1st among students of the 19th cohort', 'link' => null],
+            ['title' => 'Architectural Diagram Course', 'note' => null, 'org' => 'Palette Academy', 'when' => 'Spring 2025', 'extra' => 'Ranked 1st among students of the 31st cohort', 'link' => null],
         ],
         'Visualisation & Modelling' => [
             ['title' => 'Storytelling in Architecture with AI', 'note' => null, 'org' => 'Kaveh Dadgar', 'when' => '2026 · In Progress', 'extra' => null, 'link' => null],
@@ -52,7 +52,7 @@ description: Melieqa Rezaei — architect (BArch, University of Tabriz), archite
         <div class="flex flex-col md:flex-row gap-10 md:gap-14">
             <div class="w-44 sm:w-52 md:w-64 shrink-0">
                 @include('_components.placeholder-image', [
-                    'image' => null,
+                    'image' => $page->portrait,
                     'label' => 'Portrait',
                     'alt' => 'Melieqa Rezaei',
                     'ratio' => 'aspect-[4/5]',
@@ -60,9 +60,7 @@ description: Melieqa Rezaei — architect (BArch, University of Tabriz), archite
             </div>
 
             <div class="flex-1 max-w-3xl">
-                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-paper-bright my-0">About</h1>
-
-                <p class="font-hand text-xl md:text-2xl text-paper-dim mt-2 mb-8">Who I am, and where it came from</p>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-paper-bright my-0">WHO I AM</h1>
 
                 <div class="flex flex-col gap-5 text-base md:text-lg">
                     <p class="my-0">
@@ -88,14 +86,14 @@ description: Melieqa Rezaei — architect (BArch, University of Tabriz), archite
 
     {{-- Experience --}}
     <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
-        @include('_components.section-heading', ['heading' => "What I've been working on", 'kicker' => 'Experience'])
+        @include('_components.section-heading', ['heading' => "What I've been working on"])
 
         @include('_components.timeline')
     </section>
 
     {{-- Skills --}}
     <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
-        @include('_components.section-heading', ['heading' => 'What I use', 'kicker' => 'Tools of the trade'])
+        @include('_components.section-heading', ['heading' => 'What I use'])
 
         <div class="space-y-8">
             @foreach ($skills as $level => $tools)
@@ -114,7 +112,7 @@ description: Melieqa Rezaei — architect (BArch, University of Tabriz), archite
 
     {{-- Education --}}
     <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
-        @include('_components.section-heading', ['heading' => 'Where it came from', 'kicker' => 'Education'])
+        @include('_components.section-heading', ['heading' => 'Where it came from'])
 
         <div class="flex flex-col md:flex-row gap-6 md:gap-12">
             <div class="md:w-1/3">
@@ -125,8 +123,20 @@ description: Melieqa Rezaei — architect (BArch, University of Tabriz), archite
             </div>
 
             <div class="md:w-2/3 md:border-l md:border-dashed md:border-line md:pl-12 text-base">
+                @php
+                    // Only link the thesis while that project is visible, otherwise the link 404s.
+                    $thesis = $projects->first(function ($project) {
+                        return $project->getFilename() === 'cardiac-hospital';
+                    });
+                @endphp
+
                 <p class="my-0">
-                    I graduated with a <a href="/work/cardiac-hospital" title="Cardiac Hospital thesis" class="link-underline">cardiac hospital</a>
+                    I graduated with a
+                    @if ($thesis)
+                        <a href="{{ $thesis->getUrl() }}" title="{{ $thesis->title }} thesis" class="link-underline">cardiac hospital</a>
+                    @else
+                        cardiac hospital
+                    @endif
                     designed around the patient's path to critical care.
                 </p>
 
@@ -140,7 +150,7 @@ description: Melieqa Rezaei — architect (BArch, University of Tabriz), archite
 
     {{-- Courses --}}
     <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
-        @include('_components.section-heading', ['heading' => 'What I keep learning', 'kicker' => 'Courses and certifications'])
+        @include('_components.section-heading', ['heading' => 'What I keep learning'])
 
         <div class="space-y-12">
             @foreach ($courses as $group => $items)
@@ -183,7 +193,7 @@ description: Melieqa Rezaei — architect (BArch, University of Tabriz), archite
 
     {{-- Languages --}}
     <section class="container max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20 rule-dashed">
-        @include('_components.section-heading', ['heading' => 'What I speak', 'kicker' => 'Languages'])
+        @include('_components.section-heading', ['heading' => 'What I speak'])
 
         <ul class="list-none flex flex-wrap gap-2 md:gap-3 my-0 pl-0">
             @foreach ($languages as $language => $level)

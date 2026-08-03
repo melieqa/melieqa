@@ -2,6 +2,7 @@
 extends: _layouts.project
 section: content
 order: 4
+is_visible: false
 title: Rhino Modelling for Palette Visuals
 kind: 3D modelling · Freelance
 meta: Palette Visuals · 4 small-scale projects · 2025 – Present
